@@ -7,7 +7,7 @@ export default function Settings() {
 
     const getSleepNotificationsEnabled = async () => {
         const backendServerIp = process.env.REACT_APP_BACKEND_IP || "localhost:8001";
-        const enabled = await ((await fetch(`http://${backendServerIP}/getSleepNotificationsEnabled`)).text());
+        const enabled = await ((await fetch(`http://${backendServerIp}/getSleepNotificationsEnabled`)).text());
         console.log('result: ', enabled);
         setChecked(enabled === 'true');
     };
@@ -18,7 +18,7 @@ export default function Settings() {
     const handleChange = async (_e: any, enabled: boolean) => {
         console.log('enabled: ', enabled);
         const backendServerIp = process.env.REACT_APP_BACKEND_IP || "localhost:8001";
-        await fetch(`http://${backendServerIP}/setSleepNotificationsEnabled/${enabled}`);
+        await fetch(`http://${backendServerIp}/setSleepNotificationsEnabled/${enabled}`);
         console.log('done.');
         getSleepNotificationsEnabled();
     }
