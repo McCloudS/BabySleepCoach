@@ -71,14 +71,14 @@ export function CroppableVideoFeed({ videoFeed, SharedImgElement, retraining, se
     const yup = boundingBox!.split(':')[1]
     // console.log('yup: ', yup);
     setRetraining(true);
-    const result = await fetch(`http://${process.env.REACT_APP_BACKEND_IP}/setAIFocusRegion/${yup}`);
+    const result = await fetch(`localhost:8001/setAIFocusRegion/${yup}`);
     setRetraining(false);
   };
 
   const resetAIFocusRegion = async () => {
     anno?.cancelSelected();
     anno?.clearAnnotations();
-    const result = await fetch(`http://${process.env.REACT_APP_BACKEND_IP}/setAIFocusRegion/reset`);
+    const result = await fetch(`localhost:8001/setAIFocusRegion/reset`);
     // console.log('result: ', result);
   };
 
