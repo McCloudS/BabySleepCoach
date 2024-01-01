@@ -49,11 +49,13 @@ type VideoFeedProps = {
 export default function VideoFeed({ modelProba, setModelProba, videoFeedType, setVideoFeedType }: VideoFeedProps) {
 
   const [bodyFound, setBodyFound] = useState(false)
-  const videoFeed = videoFeedType === VideoFeedTypeEnum.ML ? `http://localhost:8001/video_feed/processed` : `http://localhost:8001/video_feed/raw`;
+  const backendServerIp = process.env.REACT_APP_BACKEND_IP || "localhost:8001";
+  const videoFeed = videoFeedType === VideoFeedTypeEnum.ML ? `http://${backendServerIP}/video_feed/processed` : `http://${backendServerIP}/video_feed/raw`;
 
   useEffect(() => {
     const intervalId = setInterval(async () => { 
-        const [presentProba, _notPresentProba, _time, bodyFound] = (await (await fetch(`http://localhost:8001/getClassificationProbabilities`)).text()).split(',');
+        const backendServerIp = process.env.REACT_APP_BACKEND_IP || "localhost:8001";
+        const [presentProba, _notPresentProba, _time, bodyFound] = (await (await fetch(`http://${backendServerIP}/getClassificationProbabilities`)).text()).split(',');
         console.log('modelProba: ', presentProba);
         console.log("bodyFound: ", bodyFound)
         setBodyFound(bodyFound.toLowerCase() === "true");
@@ -78,7 +80,8 @@ export default function VideoFeed({ modelProba, setModelProba, videoFeedType, se
     if(retraining) return;
     setRetraining(true);
     console.log('Retraining...');
-    const trainingResult = await fetch(`http://localhost:8001/retrainWithNewSample/${classification}`);
+    const backendServerIp = process.env.REACT_APP_BACKEND_IP || "localhost:8001";
+    const trainingResult = await fetch(`http://${backendServerIP}/retrainWithNewSample/${classification}`);
     console.log("res: ", trainingResult);
     setRetraining(false);
     setSuccess(true);
