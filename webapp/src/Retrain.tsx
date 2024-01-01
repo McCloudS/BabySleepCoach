@@ -17,7 +17,7 @@ export default function Retrain({ videoFeedType }: RetrainProps) {
 
     useEffect(() => {
         const intervalId = setInterval(async () => { 
-            const [awakeProba, ...reasons] = (await (await fetch(`http://${process.env.REACT_APP_BACKEND_IP}/getResultAndReasons`)).text()).split(',');
+            const [awakeProba, ...reasons] = (await (await fetch(`http://localhost:8001/getResultAndReasons`)).text()).split(',');
             console.log('babyProba: ', awakeProba);
             console.log('reasons: ', reasons);
             setVoteReasons(reasons as any);
