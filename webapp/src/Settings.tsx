@@ -6,7 +6,7 @@ export default function Settings() {
     const [checked, setChecked] = useState<boolean | undefined>(undefined)
 
     const getSleepNotificationsEnabled = async () => {
-        const enabled = await ((await fetch(`http://${process.env.REACT_APP_BACKEND_IP}/getSleepNotificationsEnabled`)).text());
+        const enabled = await ((await fetch(`http://localhost:8001/getSleepNotificationsEnabled`)).text());
         console.log('result: ', enabled);
         setChecked(enabled === 'true');
     };
@@ -16,7 +16,7 @@ export default function Settings() {
 
     const handleChange = async (_e: any, enabled: boolean) => {
         console.log('enabled: ', enabled);
-        await fetch(`http://${process.env.REACT_APP_BACKEND_IP}/setSleepNotificationsEnabled/${enabled}`);
+        await fetch(`http://localhost:8001/setSleepNotificationsEnabled/${enabled}`);
         console.log('done.');
         getSleepNotificationsEnabled();
     }
